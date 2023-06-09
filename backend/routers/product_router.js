@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
 
 const uploadOptions = multer({storage:storage});
 
-router.post('/post/items',uploadOptions.single('image'),async(req,res)=>{
+router.post('product/post',uploadOptions.single('image'),async(req,res)=>{
     const category = await Category.findById(req.body.category)
     if(!category)
     return res.status(400).json({message:"invalid category"})
@@ -62,7 +62,7 @@ router.post('/post/items',uploadOptions.single('image'),async(req,res)=>{
 
 
 
-router.put('/product/:id',uploadOptions.single('image'),async(req,res)=>{
+router.put('/product/update/:id',uploadOptions.single('image'),async(req,res)=>{
     
     if(mongoose.isValidObjectId(req.params.id)){
         return res.status(400).json({message:"invalid product id"})
@@ -111,7 +111,7 @@ router.put('/product/:id',uploadOptions.single('image'),async(req,res)=>{
     
 })
 
-router.get('/get/product/:id',async(req,res)=>{
+router.get('/product/get/:id',async(req,res)=>{
     const get = await Product.findById(req.params.id).populate('category')
     if(get){
         return res.status(200).json({success:true,data:get})
@@ -125,20 +125,20 @@ router.delete('/product/delete/:id',async(req,res)=>{
 })
 
 
-router.get('/get/featured/:count',async(req,res)=>{
+router.get('/product/get/featured/:count',async(req,res)=>{
     const count = req.params.count?req.params.count:0;
     const product = await Product.find({isfeatured:true}).limit(+count)
     if(product)
     return res.status(200).json({success:true,data:product})
 })
 
-router.get('/get/count',async(req,res)=>{
+router.get('/product/get/count',async(req,res)=>{
     const count = await Product.countDocuments((count=>(count)))
     if(count){
         return res.status(200).json({success:true,data:count})
     }
 })
-router.put('/gallery-images/:id',uploadOptions.array('images',10),async(req,res)=>{
+router.put('/product/gallery-images/:id',uploadOptions.array('images',10),async(req,res)=>{
     if(!mongoose.isValidObjectId(req.params).id){
         return res.status(400).json({message:"invalid object id"})
     }

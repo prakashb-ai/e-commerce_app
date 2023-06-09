@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const productSchema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -51,13 +51,15 @@ const productSchema = new mongoose.Schema({
 },{
     timestamps:true
 })
-productSchema.virtual('id').get(function (){
-    return this._id.toHexString()
 
+ProductSchema.virtual('id').get(function (){
+    return this._id.toHexString()
 }),
-productSchema.set('toJSON',{
+
+ProductSchema.set('toJSON',{
     virtuals:true
 })
 
 
-module.exports = mongoose.model('product',productSchema)
+
+module.exports = mongoose.model('product',ProductSchema)

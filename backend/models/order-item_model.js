@@ -12,16 +12,14 @@ const OrderItemSchema = new mongoose.Schema({
 
 },{
     timestamps:true
-},
+})
 
-OrderItemSchema.virtual('id').get(function(){
+OrderItemSchema.virtual('id').get(function (){
     return this._id.toHexString()
 }),
-
 OrderItemSchema.set('toJSON',{
     virtuals:true
 })
 
-)
 
-module.exports = mongoose.model('order-item',OrderItemSchema)
+module.exports = mongoose.model('orderItems',OrderItemSchema)

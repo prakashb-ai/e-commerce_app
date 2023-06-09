@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs')
 
 
 
-router.get('/',async(req,res)=>{
+router.get('/user',async(req,res)=>{
 
     const userList = await User.find().select('email password')
 
@@ -14,14 +14,14 @@ router.get('/',async(req,res)=>{
     return res.status(200).json({success:true,data:userList})
 })
 
-router.get('/:id',async(req,res)=>{
+router.get('/user/:id',async(req,res)=>{
     const getData = await User.findById(req.params.id)
 
     if(getData)
     return res.status(200).json({success:true,data:getData})
 })
 
-router.post('/register',async(req,res)=>{
+router.post('/user/register',async(req,res)=>{
     const user = new User({
         name:req.body.name,
         email:req.body.email,
@@ -44,7 +44,7 @@ router.post('/register',async(req,res)=>{
     
 })
 
-router.post('/login',async(req,res)=>{
+router.post('/user/login',async(req,res)=>{
     const user = await User.findOne({email:req.body.email})
     const secret = process.env.secret
     if(!user)
@@ -65,7 +65,7 @@ router.post('/login',async(req,res)=>{
     }
 })
 
-router.put('/:id',async(req,res)=>{
+router.put('/user/update/:id',async(req,res)=>{
     const update_data = await User.findById(req.params.id)
     let newPassword
 
@@ -96,8 +96,8 @@ router.put('/:id',async(req,res)=>{
     return res.status(200).json({success:true,data:updateData})
 })
 
-router.get('/count',async(req,res)=>{
-    const countDocument = await User.countDocuments((count=>count))
+router.get('/user/count',async(req,res)=>{
+    const countDocument = await User.countDocuments((count)=>count)
     if(!countDocument){
         return res.status(400).json({success:false})
     }
@@ -108,7 +108,7 @@ router.get('/count',async(req,res)=>{
 })
 
 
-router.delete('/delete/:id',async(req,res)=>{
+router.delete('/user/delete/:id',async(req,res)=>{
     const delete_data = User.findByIdAndDelete(req.params.id)
     if(delete_data)
     return res.status(200).json({success:true,data:delete_data})

@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const category = require('../models/categories_model')
 
-router.post('/post/category',async(req,res)=>{
+router.post('/category/post',async(req,res)=>{
     const post_Data = new category({
         name:req.body.name,
         icon:req.body.icon,
@@ -19,7 +19,7 @@ router.get('/category/all',async(req,res)=>{
     return res.status(200).json({message:"category was created",data:find})
 })
 
-router.put(`/update/:id`,async(req,res)=>{
+router.put(`/category/update/:id`,async(req,res)=>{
     const update_data = await category.findByIdAndUpdate(req.params.id,{
         name:req.body.name,
         icon:req.body.icon,
