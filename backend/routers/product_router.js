@@ -29,10 +29,13 @@ const storage = multer.diskStorage({
 
 const uploadOptions = multer({storage:storage});
 
-router.post('product/post',uploadOptions.single('image'),async(req,res)=>{
+router.post('/product/post',uploadOptions.single('image'),async(req,res)=>{
+
     const category = await Category.findById(req.body.category)
+
     if(!category)
     return res.status(400).json({message:"invalid category"})
+
     const file = req.file
     if(!file)
     return res.status(400).json({message:"No image is request"})
@@ -133,11 +136,12 @@ router.get('/product/get/featured/:count',async(req,res)=>{
 })
 
 router.get('/product/get/count',async(req,res)=>{
-    const count = await Product.countDocuments((count=>(count)))
+    const count = await Product.countDocuments((count)=>count)
     if(count){
         return res.status(200).json({success:true,data:count})
     }
 })
+
 router.put('/product/gallery-images/:id',uploadOptions.array('images',10),async(req,res)=>{
     if(!mongoose.isValidObjectId(req.params).id){
         return res.status(400).json({message:"invalid object id"})
@@ -148,7 +152,7 @@ router.put('/product/gallery-images/:id',uploadOptions.array('images',10),async(
 
     if(files){
         files.map((file)=>{
-            imagepath.push(`${basepath}${file.filename}`)
+            imagepaths.push(`${basepath}${file.filename}`)
         });
     }
     const product = await Product.findByIdAndUpdate(req.params.id,{

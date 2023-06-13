@@ -96,8 +96,10 @@ router.put('/user/update/:id',async(req,res)=>{
     return res.status(200).json({success:true,data:updateData})
 })
 
+
 router.get('/user/count',async(req,res)=>{
-    const countDocument = await User.countDocuments((count)=>count)
+    const countDocument = await User.countDocuments((count)=>(count))
+
     if(!countDocument){
         return res.status(400).json({success:false})
     }
@@ -109,7 +111,7 @@ router.get('/user/count',async(req,res)=>{
 
 
 router.delete('/user/delete/:id',async(req,res)=>{
-    const delete_data = User.findByIdAndDelete(req.params.id)
+    const delete_data = await User.findByIdAndDelete(req.params.id)
     if(delete_data)
     return res.status(200).json({success:true,data:delete_data})
 })

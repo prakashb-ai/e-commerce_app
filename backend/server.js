@@ -18,6 +18,7 @@ app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 const user_router = require('./routers/user_router');
 const product_router = require('./routers/product_router')
 const category_router = require('./routers/categories_router')
+const order_router = require('./routers/order_router')
 
 app.use(user_router)
 app.use(product_router)

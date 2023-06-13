@@ -36,8 +36,8 @@ const OrderSchema = new mongoose.Schema({
         required:true
     },
     dateOrdered:{
-        type:Date.now(),
-        required:true
+        type: Date,
+        default: Date.now,
     }
 
 },{
@@ -48,7 +48,7 @@ OrderSchema.virtual('id').get(function (){
     return this._id.toHexString()
 }),
 
-Order.Schema.set('toJSON',{
+OrderSchema.set('toJSON',{
     virtuals:true
 })
 
